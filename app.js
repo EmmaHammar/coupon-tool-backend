@@ -5,6 +5,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var couponsRouter = require('./routes/coupons');
+var productsRouter = require('./routes/products');
+
 
 var app = express();
 
@@ -16,6 +19,7 @@ MongoClient.connect('mongodb+srv://emmahammar:Hejhej123!@taskinfo.uvgzw.mongodb.
     console.log('Vi är uppkopplade mot db');
 
     const db = client.db('couponToolDb');
+    // const db = client.db('coupon-tool'); //which one use? 
     app.locals.db = db;
 });
 
@@ -27,5 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/coupons', couponsRouter);
+app.use('/products', productsRouter);
 
 module.exports = app;
