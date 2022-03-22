@@ -1,20 +1,35 @@
 var express = require('express');
 var router = express.Router();
+const cors = require('cors');
 
-router.get('/', function(req, res, next) {
+router.use(cors());
 
-    // update coupon based on couponId
-    req.app.locals.db.collection('coupons').updateOne({'couponId': '1'}, {$set: {'couponText': 'Sia har glassfest och du är bjuden!'}})
+// router.get('/', function(req, res, next) {
+
+//     // update coupon based on couponId
+//     req.app.locals.db.collection('coupons').updateOne({'couponId': '2'}, {$set: {'couponHeading': 'Påskharen är här!'}})
+//     .then(result => {
+
+//         // //filter and log all couponIds:
+//         // for (coupon in coupons) {
+//         //     console.log("coupons[coupon]:", coupons[coupon].couponId);
+//         // }
+
+//         res.send([{'code': 'ok'}])
+//     });
+// });
+
+router.post('/update', function(req, res) {
+    console.log("req.body:", req.body);
+
+    req.app.locals.db.collection("coupons").updateOne({'couponId': req.body.couponId}, {$set: {'couponLogo': req.body.couponLogo}})
     .then(result => {
-
-        // //filter and log all couponIds:
-        // for (coupon in coupons) {
-        //     console.log("coupons[coupon]:", coupons[coupon].couponId);
-        // }
-
-        res.send([{'code': 'ok'}])
+      console.log("result", result);
+      res.json({"code": "success"});
     });
-});
+  
+  });
+  
 
 
 module.exports = router;
