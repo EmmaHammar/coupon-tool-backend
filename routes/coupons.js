@@ -4,11 +4,11 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-    //get all
+    // get all
     req.app.locals.db.collection('coupons').find().toArray()
     .then(results => {
         console.log("results all coupons:", results); //[]?
-        res.send({'code': 'ok'})
+        res.send([{'code': 'ok'}, {'result': results}])
     });
 
     // res.send('Hej från couponsRouter!');

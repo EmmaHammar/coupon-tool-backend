@@ -12,14 +12,13 @@ var productsRouter = require('./routes/products');
 var app = express();
 
 const MongoClient = require("mongodb").MongoClient;
-MongoClient.connect('mongodb+srv://emmahammar:Hejhej123!@taskinfo.uvgzw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+MongoClient.connect("mongodb+srv://mongodbUser:mongodb@coupon-tool.488e7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
     useUnifiedTopology: true
 })
 .then(client => {
     console.log('Vi är uppkopplade mot db');
 
     const db = client.db('couponToolDb');
-    // const db = client.db('coupon-tool'); //which one use? 
     app.locals.db = db;
 });
 
