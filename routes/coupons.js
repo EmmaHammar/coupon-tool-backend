@@ -1,41 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
 
-    // get all
-    req.app.locals.db.collection('coupons').find().toArray()
-    .then(results => {
-        console.log("results all coupons:", results); //[]?
-        res.send([{'code': 'ok'}, {'result': results}])
-    });
+    // update coupon based on couponId
+    req.app.locals.db.collection('coupons').updateOne({'couponId': '1'}, {$set: {'couponText': 'Sia har glassfest och du är bjuden!'}})
+    .then(result => {
 
-    // res.send('Hej från couponsRouter!');
-  
+        // //filter and log all couponIds:
+        // for (coupon in coupons) {
+        //     console.log("coupons[coupon]:", coupons[coupon].couponId);
+        // }
+
+        res.send([{'code': 'ok'}])
+    });
 });
 
-// router.post('/add', function(req, res) {
-//     //mock from fe
-//     let coupon = {
-//         pickedCouponId: '1a',
-//         couponLogo: '',
-//         couponLogoPosition: 'topLeft',
-//         couponBackground: '',
-//         couponHeading: '',
-//         couponText: ''
-//     };
-
-//     coupon = req.body;
-//     console.log("coupon:", coupon);
-//     req.app.locals.db.collection('coupons').updateOne(req.body)
-//     .then(results => {
-//         // console.log(results);
-//         res.json({'code': 'success'})
-//         // res.redirect('/show')
-//     })
-
-// })
 
 module.exports = router;
 
@@ -45,3 +25,39 @@ module.exports = router;
 //speca vilken collection i db = .collection('couponArrs')
 
 //usersbook -collection: users, orders (alla users ordrar), products (all products)
+
+
+// const myFunction = async function (x, y) {
+//     return [
+//         x, 
+//         y,
+//     ];
+// };
+
+// //startFunction
+// const start = async function (a, b) {
+//     const result = await myFunction('test', 'test');
+//     console.log(result);
+// };
+
+// //call start
+// start()
+
+
+//SAVE FOR LATER:pagination om många produkter
+//req.app.locals.db.collection('products').find().skip(20).limit(20).toArray() (tar 20 resultat men hoppar över de 20 första)
+
+
+//filtrera:
+//req.app.locals.db.collection('coupons').find({'carMake': 'Ford', 'carModel': 'Focus}).toArray()
+//Prints all ford with carmodel Focus
+
+//sortera
+//req.app.locals.db.collection('coupons').find().sort({'modelYear': 1}).toArray()
+//descending/ascending 1 = får den äldsta 1948 först, -1 = 2013
+//alfabetisk ordning: 'carMake': 1 = börjar på A, -1=börjar på Ö
+
+
+//get all
+    // req.app.locals.db.collection('coupons').find({'couponId': '1'}).toArray()
+    //.then(coupons => {
