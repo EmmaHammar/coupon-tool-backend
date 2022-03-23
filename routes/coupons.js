@@ -22,13 +22,13 @@ router.use(cors());
 //TODO change {$set: {'logo': req.body.logo}}) TO dynamical 'logo'
 router.post('/update', function(req, res) {
     console.log("req.body:", req.body);
+    //separate newContent from couponId key pair value in obj req.body
+    let value = Object.values(req.body)[1];
+    let newContent = {[Object.keys(req.body)[1]]:value};
+    console.log("newContent:", newContent);
 
-    //destructure object to get only {contentKey : contentValue}
-    // const contentObj = ( ({[req.body.logo]}) => ({[req.body.logo]}))(req.body);
-
-    req.app.locals.db.collection("coupons").updateOne({'couponId': req.body.couponId}, {$set: {'logo': req.body.logo}})
+    req.app.locals.db.collection("coupons").updateOne({'couponId': req.body.couponId}, {$set: newContent})
     .then(result => {
-      console.log("result", result);
       res.json({"code": "success"});
     });
   
