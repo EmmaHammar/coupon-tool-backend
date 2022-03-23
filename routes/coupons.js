@@ -4,24 +4,9 @@ const cors = require('cors');
 
 router.use(cors());
 
-// router.get('/', function(req, res, next) {
-
-//     // update coupon based on couponId
-//     req.app.locals.db.collection('coupons').updateOne({'couponId': '2'}, {$set: {'couponHeading': 'Påskharen är här!'}})
-//     .then(result => {
-
-//         // //filter and log all couponIds:
-//         // for (coupon in coupons) {
-//         //     console.log("coupons[coupon]:", coupons[coupon].couponId);
-//         // }
-
-//         res.send([{'code': 'ok'}])
-//     });
-// });
-
-//TODO change {$set: {'logo': req.body.logo}}) TO dynamical 'logo'
 router.post('/update', function(req, res) {
     console.log("req.body:", req.body);
+    
     //separate newContent from couponId key pair value in obj req.body
     let value = Object.values(req.body)[1];
     let newContent = {[Object.keys(req.body)[1]]:value};
@@ -34,8 +19,6 @@ router.post('/update', function(req, res) {
   
   });
   
-
-
 module.exports = router;
 
 
@@ -80,3 +63,18 @@ module.exports = router;
 //get all
     // req.app.locals.db.collection('coupons').find({'couponId': '1'}).toArray()
     //.then(coupons => {
+
+    // router.get('/', function(req, res, next) {
+
+//     // update coupon based on couponId
+//     req.app.locals.db.collection('coupons').updateOne({'couponId': '2'}, {$set: {'couponHeading': 'Påskharen är här!'}})
+//     .then(result => {
+
+//         // //filter and log all couponIds:
+//         // for (coupon in coupons) {
+//         //     console.log("coupons[coupon]:", coupons[coupon].couponId);
+//         // }
+
+//         res.send([{'code': 'ok'}])
+//     });
+// });
