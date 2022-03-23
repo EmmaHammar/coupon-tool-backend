@@ -19,10 +19,14 @@ router.use(cors());
 //     });
 // });
 
+//TODO change {$set: {'logo': req.body.logo}}) TO dynamical 'logo'
 router.post('/update', function(req, res) {
     console.log("req.body:", req.body);
 
-    req.app.locals.db.collection("coupons").updateOne({'couponId': req.body.couponId}, {$set: {'couponLogo': req.body.couponLogo}})
+    //destructure object to get only {contentKey : contentValue}
+    // const contentObj = ( ({[req.body.logo]}) => ({[req.body.logo]}))(req.body);
+
+    req.app.locals.db.collection("coupons").updateOne({'couponId': req.body.couponId}, {$set: {'logo': req.body.logo}})
     .then(result => {
       console.log("result", result);
       res.json({"code": "success"});
