@@ -3,10 +3,11 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    
-    
-
-  res.send('Hej från productsRouter');
+  req.app.locals.db.collection('products').find({}).toArray()
+  .then(products => {
+    console.log("products", products);
+    res.json({'products': products});
+  });
 });
 
 module.exports = router;
