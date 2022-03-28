@@ -5,50 +5,22 @@ const cors = require('cors');
 router.use(cors());
 
 router.post('/update', function(req, res) {
-    console.log("req.body:", req.body);
-    
-    //separate newContent from couponId key pair value in obj req.body
-    let value = Object.values(req.body)[1];
-    let newContent = {[Object.keys(req.body)[1]]:value};
-    console.log("newContent:", newContent);
 
-    req.app.locals.db.collection("coupons").updateOne({'couponId': req.body.couponId}, {$set: newContent})
-    .then(result => {
-      res.json({"code": "success"});
-    });
-  
+  let couponId = req.body.couponId;
+  delete req.body.couponId; //so db can be updated with all the other values that comes from req.body but not couponId since that's not aimed to change
+    
+  req.app.locals.db.collection("coupons").updateOne({'couponId': couponId}, {$set: req.body})
+  .then(result => {
+    res.json({"code": "success!"});
   });
+
+});
   
 module.exports = router;
 
 
-//https://www.youtube.com/watch?v=_2i3vqrU6L4
-// koppling db =    req.app.locals.db.
-//speca vilken collection i db = .collection('couponArrs')
-
-//usersbook -collection: users, orders (alla users ordrar), products (all products)
-
-
-// const myFunction = async function (x, y) {
-//     return [
-//         x, 
-//         y,
-//     ];
-// };
-
-// //startFunction
-// const start = async function (a, b) {
-//     const result = await myFunction('test', 'test');
-//     console.log(result);
-// };
-
-// //call start
-// start()
-
-
 //SAVE FOR LATER:pagination om många produkter
 //req.app.locals.db.collection('products').find().skip(20).limit(20).toArray() (tar 20 resultat men hoppar över de 20 första)
-
 
 //filtrera:
 //req.app.locals.db.collection('coupons').find({'carMake': 'Ford', 'carModel': 'Focus}).toArray()
@@ -58,23 +30,3 @@ module.exports = router;
 //req.app.locals.db.collection('coupons').find().sort({'modelYear': 1}).toArray()
 //descending/ascending 1 = får den äldsta 1948 först, -1 = 2013
 //alfabetisk ordning: 'carMake': 1 = börjar på A, -1=börjar på Ö
-
-
-//get all
-    // req.app.locals.db.collection('coupons').find({'couponId': '1'}).toArray()
-    //.then(coupons => {
-
-    // router.get('/', function(req, res, next) {
-
-//     // update coupon based on couponId
-//     req.app.locals.db.collection('coupons').updateOne({'couponId': '2'}, {$set: {'couponHeading': 'Påskharen är här!'}})
-//     .then(result => {
-
-//         // //filter and log all couponIds:
-//         // for (coupon in coupons) {
-//         //     console.log("coupons[coupon]:", coupons[coupon].couponId);
-//         // }
-
-//         res.send([{'code': 'ok'}])
-//     });
-// });
