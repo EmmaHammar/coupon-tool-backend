@@ -15,6 +15,15 @@ router.post('/update', function(req, res) {
   });
 
 });
+
+//TODO find right coupon based on couponId
+router.get('/', function(req, res, next) {
+  req.app.locals.db.collection('coupons').find({}).toArray()
+  .then(coupons => {
+    console.log("coupons", coupons);
+    res.send(coupons);
+  });
+});
   
 module.exports = router;
 
