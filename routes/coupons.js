@@ -16,12 +16,14 @@ router.post('/update', function(req, res) {
 
 });
 
-//TODO find right coupon based on couponId
-router.get('/', function(req, res, next) {
-  req.app.locals.db.collection('coupons').find({}).toArray()
-  .then(coupons => {
-    console.log("coupons", coupons);
-    res.send(coupons);
+//find coupon based on pickedCouponId
+router.get('/:pickedCouponId?', function(req, res, next) {
+  console.log("req.params:", req.params.pickedCouponId);
+
+  req.app.locals.db.collection('coupons').find({'couponId': req.params.pickedCouponId}).toArray()
+  .then(coupon => {
+    console.log("coupon", coupon);
+    res.send(coupon);
   });
 });
   
