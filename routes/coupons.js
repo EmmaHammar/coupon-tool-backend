@@ -18,11 +18,11 @@ router.post('/update', function(req, res) {
 
 //find coupon based on pickedCouponId
 router.get('/:pickedCouponId?', function(req, res, next) {
-  console.log("req.params:", req.params.pickedCouponId);
+  // console.log("req.params:", req.params.pickedCouponId);
 
   req.app.locals.db.collection('coupons').find({'couponId': req.params.pickedCouponId}).toArray()
   .then(coupon => {
-    console.log("coupon", coupon);
+    // console.log("coupon", coupon);
     res.send(coupon);
   });
 });
