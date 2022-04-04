@@ -26,7 +26,31 @@ router.get('/:pickedCouponId?', function(req, res, next) {
     res.send(coupon);
   });
 });
-  
+
+//show right couponInfo when editor UI prints
+router.post('/show', function(req, res) {
+
+  console.log("req.body:", req.body);
+  // res.json({"code": "success!"});
+
+ 
+  req.app.locals.db.collection("coupons").find({'couponId': req.body.pickedCouponId}).toArray()
+  .then(result => {
+    
+    if (req.body.currentStep !== '') {
+      // console.log("result", result);
+      res.json({"coupon": result});
+    }
+
+    else {
+      res.json({"dbResult": 'error'});
+    }
+
+  });
+
+});
+
+
 module.exports = router;
 
 
