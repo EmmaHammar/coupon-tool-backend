@@ -11,7 +11,7 @@ router.post('/update', function(req, res) {
     
   req.app.locals.db.collection("coupons").updateOne({'couponId': couponId}, {$set: req.body})
   .then(result => {
-    res.json({"code": "success!"});
+    res.json({"code": "Coupon is updated!"});
   });
 
 });
@@ -35,6 +35,8 @@ router.post('/show', function(req, res) {
 
  
   req.app.locals.db.collection("coupons").find({'couponId': req.body.pickedCouponId}).toArray()
+  // req.app.locals.db.collection("coupons").find({'couponId': '2'}).toArray()
+
   .then(result => {
     
     if (req.body.currentStep !== '') {
@@ -53,6 +55,7 @@ router.post('/show', function(req, res) {
 
 module.exports = router;
 
+//TODO ERR SOMETIMES: Access to fetch at 'https://coupon-tool-backend.herokuapp.com/coupons/update' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
 //SAVE FOR LATER:pagination om många produkter
 //req.app.locals.db.collection('products').find().skip(20).limit(20).toArray() (tar 20 resultat men hoppar över de 20 första)
