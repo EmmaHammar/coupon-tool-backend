@@ -4,12 +4,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var couponsRouter = require('./routes/coupons');
 var productsRouter = require('./routes/products');
 
-
 var app = express();
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 const MongoClient = require("mongodb").MongoClient;
 MongoClient.connect("mongodb+srv://mongodbUser:mongodb@coupon-tool.488e7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
@@ -29,7 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/coupons', couponsRouter);
 app.use('/products', productsRouter);
 
