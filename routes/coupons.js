@@ -52,4 +52,14 @@ router.post('/add', function(req, res) {
   });
 });
 
+//get all coupons 
+router.get('/show/all', function(req, res, next) {
+  req.app.locals.db.collection('coupons').find({}).toArray()
+  .then(coupons => {
+    // console.log("coupons", coupons);
+    res.send(coupons);
+  });
+});
+
+
 module.exports = router;
