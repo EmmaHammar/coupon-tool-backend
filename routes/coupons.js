@@ -43,4 +43,13 @@ router.post('/show', function(req, res) {
   });
 });
 
+router.post('/add', function(req, res) {
+  console.log("req.body:", req.body);
+
+  req.app.locals.db.collection("coupons").insertOne(req.body)
+  .then(result => {
+    res.json({"code:": "newCoupon saved"});
+  });
+});
+
 module.exports = router;
